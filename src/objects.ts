@@ -1,4 +1,4 @@
-import { all } from "q";
+//import { all } from "q";
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
