@@ -90,14 +90,15 @@ export function toShortForm(question: Question): string {
  */
 export function toMarkdown(question: Question): string {
     let firstLine: string = "# " + question.name + "\n";
-    let secondLine: string = question.body + "\n";
+    let secondLine: string = question.body;
     let thirdLine: string = "";
     if (question.type == "multiple_choice_question") {
         for (let i = 0; i < question.options.length; i++) {
+            secondLine = question.body + "\n";
             let mapped: string[] = question.options.map(
                 (w: string): string => "- " + w,
             );
-            let allOptions: string = mapped.join();
+            let allOptions: string = mapped.join("\n");
             thirdLine = allOptions;
         }
     }
@@ -132,7 +133,13 @@ export function publishQuestion(question: Question): Question {
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
     let newName: string = "Copy of " + oldQuestion.name;
-    let newQ: Question = { ...oldQuestion, name: newName, published: false };
+    let newQ: Question = {
+        ...oldQuestion,
+        id: id,
+        name: newName,
+        published: false,
+        options: [...oldQuestion.options],
+    };
     return newQ;
 }
 
